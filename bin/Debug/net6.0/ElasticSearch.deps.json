@@ -1,0 +1,59 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "ElasticSearch/1.0.0": {
+        "dependencies": {
+          "Elastic.Clients.Elasticsearch": "8.9.3"
+        },
+        "runtime": {
+          "ElasticSearch.dll": {}
+        }
+      },
+      "Elastic.Clients.Elasticsearch/8.9.3": {
+        "dependencies": {
+          "Elastic.Transport": "0.4.15"
+        },
+        "runtime": {
+          "lib/net6.0/Elastic.Clients.Elasticsearch.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.9.3.0"
+          }
+        }
+      },
+      "Elastic.Transport/0.4.15": {
+        "runtime": {
+          "lib/net6.0/Elastic.Transport.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.4.15.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ElasticSearch/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Elastic.Clients.Elasticsearch/8.9.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uuHDwZuQy3z93WBndPCRznU+bL0byAzIarwYOYfgphstPgxgdbFA+8nDNp1dEBrlJ67VSgfH/BBLwhNeiJPunQ==",
+      "path": "elastic.clients.elasticsearch/8.9.3",
+      "hashPath": "elastic.clients.elasticsearch.8.9.3.nupkg.sha512"
+    },
+    "Elastic.Transport/0.4.15": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XSuqHDVZ5Qd2A4g7JUa2zpYJaJgT2/dQUe3UdgcMXZ1NSrVTFHTE9pkTbf60l38JAlW38Ecfzve4H/YY7KG/2A==",
+      "path": "elastic.transport/0.4.15",
+      "hashPath": "elastic.transport.0.4.15.nupkg.sha512"
+    }
+  }
+}

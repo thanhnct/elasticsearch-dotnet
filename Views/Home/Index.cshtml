@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div class="input-group mb-3">
+            <select id="selectType" class="form-control">
+                <option value="">Search all</option>
+                <option value="">Match name</option>
+                <option value="">Match all</option>
+            </select>
+            <input id="txtSearch" type="text" class="form-control" placeholder="Enter keyword" aria-label="" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button id="btnSearch" class="btn btn-outline-primary" type="button">Search</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-12">
+        <table class="table table-bordered" id="myTable"></table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('#btnSearch').click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "GET",
+                    url: "/Home/Search",
+                    data: { key: $('#txtSearch').val(), options: $('#selectType').val() },
+                    success: function (response) {
+                        let dataSource = response.data;
+                        $('#myTable').DataTable().clear().destroy();
+                        $('#myTable').DataTable({
+                            searching: true,
+                            ordering: false,
+                            data: dataSource,
+                            columns: [
+                                { data: 'name' },
+                                { data: 'temperatureC' },
+                                { data: 'temperatureF' },
+                                { data: 'date' },
+                            ]
+                        });
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
+                    }
+                });
+            });
+
+
+            $('#myTable').DataTable({
+                searching: false,
+                data: [],
+                columns: [
+                    { data: 'name' },
+                    { data: 'temperatureC' },
+                    { data: 'temperatureF' },
+                    { data: 'date' },
+                ]
+            });
+
+
+        })
+
+    </script>
+}

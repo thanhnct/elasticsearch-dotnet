@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Y0LOvdoPdDUUQ7owRzWQ+C9iVs+PhPecDhm6Ca7hc/KLEs3UHR5MVIljebqUtpmNzgT5Or3HoPebKMTB0sOYCg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ad\\Desktop\\elasticsearch\\ElasticSearch.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ad\\.nuget\\packages\\elastic.clients.elasticsearch\\8.9.3\\elastic.clients.elasticsearch.8.9.3.nupkg.sha512",
+    "C:\\Users\\ad\\.nuget\\packages\\elastic.transport\\0.4.15\\elastic.transport.0.4.15.nupkg.sha512"
+  ],
+  "logs": []
+}

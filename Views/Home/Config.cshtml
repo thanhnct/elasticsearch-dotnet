@@ -1,0 +1,131 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-12 col-md-12">
+        <button onclick="createIndex();" class="btn btn-success">Create index</button>
+        <button onclick="deleteIndex();" class="btn btn-danger">Delete index</button>
+    </div>
+    <div class="col-12 col-md-12">
+        <div class="input-group mb-3 mt-5">
+            <input id="txtAmount" type="number" max="100000" min="1" class="form-control" placeholder="Enter the amount of data you want to create" aria-label="" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button onclick="seedData(this);" class="btn btn-outline-primary" type="button">Create documents to index</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-12">
+        <table class="table table-bordered" id="myTable"></table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        initDataTable().then(function() {
+            getAllData();
+        })
+
+        function createIndex() {
+            $.ajax({
+                type: "GET",
+                url: "/Home/CreateIndex",
+                success: function (response) {
+                    console.log(response)
+                    if (response.isSuccess) {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                        console.log(response)
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+        function deleteIndex() {
+            $.ajax({
+                type: "GET",
+                url: "/Home/DeleteIndex",
+                success: function (response) {
+                    console.log(response)
+                    if (response.isSuccess) {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                        console.log(response)
+                    }
+                    getAllData();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+        function seedData(_this) {
+            $(_this).attr('disabled', 'disabled');
+            $.ajax({
+                type: "GET",
+                url: "/Home/SeedData?length=" + parseInt($('#txtAmount').val()),
+                success: function (response) {
+                    $(_this).removeAttr('disabled');
+                    console.log(response)
+                    if (response.isSuccess) {
+                        alert(response.message);
+                        getAllData();
+                    } else {
+                        alert(response.message);
+                        console.log(response)
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
+                    $(_this).removeAttr('disabled');
+                }
+            });
+        }
+
+        function initDataTable() {
+            return new Promise(function (resolve, reject) {
+                $('#myTable').DataTable({
+                    data: [],
+                    columns: [
+                        { data: 'name' },
+                        { data: 'temperatureC' },
+                        { data: 'temperatureF' },
+                        { data: 'date' },
+                    ]
+                });
+                resolve(true);
+            })
+        }
+        
+        function getAllData() {
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetAllData",
+                success: function (response) {
+                    let dataSource = response.data;
+                    $('#myTable').DataTable().clear().destroy();
+                    $('#myTable').DataTable({
+                        searching: true,
+                        ordering: false,
+                        data: dataSource,
+                        columns: [
+                            { data: 'name' },
+                            { data: 'temperatureC' },
+                            { data: 'temperatureF' },
+                            { data: 'date' },
+                        ]
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
+                }
+            });
+          
+        }
+    </script>
+}
