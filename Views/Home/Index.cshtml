@@ -6,9 +6,8 @@
     <div class="col-12 col-md-6">
         <div class="input-group mb-3">
             <select id="selectType" class="form-control">
-                <option value="">Search all</option>
-                <option value="">Match name</option>
-                <option value="">Match all</option>
+                <option value="match_all">Match all</option>
+                <option value="match">Match</option>
             </select>
             <input id="txtSearch" type="text" class="form-control" placeholder="Enter keyword" aria-label="" aria-describedby="basic-addon2">
             <div class="input-group-append">
@@ -38,7 +37,8 @@
                             ordering: false,
                             data: dataSource,
                             columns: [
-                                { data: 'name' },
+                                { data: 'firstName' },
+                                { data: 'lastName' },
                                 { data: 'temperatureC' },
                                 { data: 'temperatureF' },
                                 { data: 'date' },
@@ -56,7 +56,8 @@
                 searching: false,
                 data: [],
                 columns: [
-                    { data: 'name' },
+                    { data: 'firstName' },
+                    { data: 'lastName' },
                     { data: 'temperatureC' },
                     { data: 'temperatureF' },
                     { data: 'date' },

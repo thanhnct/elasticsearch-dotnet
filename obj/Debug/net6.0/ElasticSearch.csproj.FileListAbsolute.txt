@@ -32,3 +32,4 @@ C:\Users\ad\Desktop\elasticsearch\obj\Debug\net6.0\ref\ElasticSearch.dll
 C:\Users\ad\Desktop\elasticsearch\bin\Debug\net6.0\Elastic.Clients.Elasticsearch.dll
 C:\Users\ad\Desktop\elasticsearch\bin\Debug\net6.0\Elastic.Transport.dll
 C:\Users\ad\Desktop\elasticsearch\obj\Debug\net6.0\ElasticSearch.csproj.CopyComplete
+C:\Users\ad\Desktop\elasticsearch\bin\Debug\net6.0\elasticsearch-analysis-vietnamese-8.7.0\src\test\resources\org\elasticsearch\index\analysis\vi_analysis.json

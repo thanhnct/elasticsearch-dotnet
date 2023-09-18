@@ -1,4 +1,5 @@
 ﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Transport;
 using ElasticSearch.Controllers;
 using ElasticSearch.Models;
 
@@ -17,11 +18,10 @@ namespace ElasticSearch.Repository
             _logger = logger;
 
 
-            //_setting = new ElasticsearchClientSettings(new Uri("https://localhost:9200"))
-            //    .CertificateFingerprint("[Your_Certificate]")
-            //    .Authentication(new BasicAuthentication("[Your_User]", "[Your_Password]"));
+            var setting = new ElasticsearchClientSettings(new Uri("http://localhost:9200"))
+                .Authentication(new BasicAuthentication("elastic", "changeme"));
 
-            var setting = new ElasticsearchClientSettings(new Uri("http://localhost:9200"));
+            //var setting = new ElasticsearchClientSettings(new Uri("http://localhost:9200"));
 
             _client = new ElasticsearchClient(setting);
 
@@ -31,27 +31,7 @@ namespace ElasticSearch.Repository
         public ResponseModel CreateIndex()
         {
             ResponseModel result = new();
-            var response = _client.Indices.Create(INDEX_NAME, c => c
-                .Settings(s => s
-                    .Analysis(a => a
-                        .CharFilters(cf => cf
-                            .Mapping("programming_language", mca => mca
-                                .Mappings(new[]
-                                {
-                                    "c# => csharp",
-                                    "C# => Csharp"
-                                })
-                            )
-                        )
-                        .Analyzers(an => an
-                            .Custom("question", ca => ca
-                                .CharFilter(new[] { "programming_language", "html_strip" })
-                                .Tokenizer("standard")
-                                .Filter(new[] { "lowercase", "stop" })
-                            )
-                        )
-                    )
-                ).Mappings(mm => mm.().Properties(p => p.Text(t => t.Name(n => n.Body).Analyzer("index_question").SearchAnalyzer("search_question"))))));
+            var response = _client.Indices.Create(INDEX_NAME);
 
             result.IsSuccess = response.IsValidResponse;
             var objError = response.ApiCallDetails.OriginalException;
@@ -130,6 +110,40 @@ namespace ElasticSearch.Repository
             }
             return result;
         }
+
         //function search
+
+        public ResponseModel SearchQuery(string key)
+        {
+            ResponseModel result = new();
+            result.Data = new();
+            var response = _client.Search<WeatherForecastModel>(s => s.Index(INDEX_NAME).From(0).Size(10000).Query(
+                q => q.Match(m => m.Field(f => f.FirstName).Query(key).Analyzer("my_analyzer"))));
+
+            if(!response.Documents.ToList().Any())
+            {
+                response = _client.Search<WeatherForecastModel>(s => s.Index(INDEX_NAME).From(0).Size(10000).Query(
+                q => q.Match(m => m.Field(f => f.LastName).Query(key).Analyzer("autocomplete_analyzer"))).Collapse(c => c.Field("YS")));
+            }
+
+            if (response.IsValidResponse)
+            {
+                result.Data = response.Documents.ToList();
+            }
+            else
+            {
+                result.IsSuccess = response.IsValidResponse;
+                var objError = response.ApiCallDetails.OriginalException;
+                if (objError is not null)
+                {
+                    result.Message = objError.Message;
+                }
+                if (response.ElasticsearchServerError is not null)
+                {
+                    result.Message = response.ElasticsearchServerError.Error.Type;
+                }
+            }
+            return result;
+        }
     }
 }

@@ -39,6 +39,12 @@ namespace ElasticSearch.Controllers
             ResponseModel data = new();
             switch(options)
             {
+                case "match":
+                    data = _repo.SearchQuery(key);
+                    break;
+                case "match_all":
+                    data = _repo.GetAllData();
+                    break;
                 default:
                     data = _repo.GetAllData();
                     break;
