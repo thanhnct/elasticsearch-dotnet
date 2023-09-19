@@ -147,7 +147,7 @@ namespace ElasticSearch.Repository
         }
 
         //function search
-        public ResponseModel SearchQuery(string key)
+        public ResponseModel SearchQueryMatchField(string key)
         {
             ResponseModel result = new();
             result.Data = new();
@@ -165,6 +165,38 @@ namespace ElasticSearch.Repository
                     q => q.Match(m => m.Field(f => f.OriginName).Query(key).Analyzer("character_analyzer"))));
                     dataResult = response.Documents.ToList();
                 }
+
+                if (response.IsValidResponse)
+                {
+                    result.Data = dataResult;
+                }
+                else
+                {
+                    result.IsSuccess = response.IsValidResponse;
+                    var objError = response.ApiCallDetails.OriginalException;
+                    if (objError is not null)
+                    {
+                        result.Message = objError.Message;
+                    }
+                    if (response.ElasticsearchServerError is not null)
+                    {
+                        result.Message = response.ElasticsearchServerError.Error.Type;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public ResponseModel SearchQueryMatchFields(string key)
+        {
+            ResponseModel result = new();
+            result.Data = new();
+            if (!string.IsNullOrEmpty(key))
+            {
+                var response = _client.Search<WeatherForecastModel>(s => s.Index(INDEX_NAME).From(0).Size(10000).Query(
+                q => q.MultiMatch(m => m.Fields(new string[] { "code", "name"}).Query(key))));
+
+                var dataResult = response.Documents.ToList();
 
                 if (response.IsValidResponse)
                 {

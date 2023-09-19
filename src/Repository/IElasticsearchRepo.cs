@@ -8,6 +8,7 @@ namespace ElasticSearch.Repository
         ResponseModel DeleteIndex();
         ResponseModel SeedData(int length);
         ResponseModel GetAllData();
-        ResponseModel SearchQuery(string key);
+        ResponseModel SearchQueryMatchField(string key);
+        ResponseModel SearchQueryMatchFields(string key);
     }
 }

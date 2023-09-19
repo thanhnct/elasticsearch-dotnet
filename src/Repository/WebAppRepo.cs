@@ -15,10 +15,11 @@ namespace ElasticSearch.Repository
 
         public IList<WeatherForecastModel> GetData(int length)
         {
-            var data = Enumerable.Range(1, 1000).Select(index => new WeatherForecastModel
+            var data = Enumerable.Range(1, length).Select(index => new WeatherForecastModel
             {
                 Date = DateTime.Now.AddDays(index).ToString("dd/MM/yyyy HH:mm:ss"),
                 TemperatureC = Random.Shared.Next(-20, 55),
+                Code = "CODE" + index,
                 Name = Names[Random.Shared.Next(Names.Length)],
             }).ToList();
 

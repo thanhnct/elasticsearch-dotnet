@@ -7,7 +7,8 @@
         <div class="input-group mb-3">
             <select id="selectType" class="form-control">
                 <option value="match_all">Match all</option>
-                <option value="match">Match</option>
+                <option value="match">Match name</option>
+                <option value="match_multi">Match name and code</option>
             </select>
             <input id="txtSearch" type="text" class="form-control" placeholder="Enter keyword" aria-label="" aria-describedby="basic-addon2">
             <div class="input-group-append">
@@ -54,10 +55,11 @@
                     searching: false,
                     data: dataSource,
                     columns: [
-                        { data: 'name' },
-                        { data: 'temperatureC' },
-                        { data: 'temperatureF' },
-                        { data: 'date' },
+                        { data: 'code', title: 'Code' },
+                        { data: 'name', title: 'Name' },
+                        { data: 'temperatureC', title: 'Temperature C' },
+                        { data: 'temperatureF', title: 'Temperature F' },
+                        { data: 'date', title: 'Date' },
                     ]
                 });
             }

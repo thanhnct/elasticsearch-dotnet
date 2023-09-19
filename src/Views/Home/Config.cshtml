@@ -61,7 +61,7 @@
         }
         function seedData(_this) {
             $(_this).attr('disabled', 'disabled');
-            $(_this).text('Wating...');
+            $(_this).text('Processing...');
             $.ajax({
                 type: "GET",
                 url: "/Home/SeedData?length=" + parseInt($('#txtAmount').val()),

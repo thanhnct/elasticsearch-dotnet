@@ -33,7 +33,7 @@
         "tokenizer": {
           "custom_tokenizer": {
             "type": "ngram",
-            "min_gram": 1,
+            "min_gram": 2, //match 2 or more characters
             "max_gram": 7,
             "token_chars": [
               "letter",
@@ -55,6 +55,9 @@
       "originName": {
         "type": "text",
         "analyzer": "character_analyzer"
+      },
+      "code": {
+        "type": "text"
       }
     }
   }

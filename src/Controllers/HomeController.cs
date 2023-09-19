@@ -39,8 +39,11 @@ namespace ElasticSearch.Controllers
             ResponseModel data = new();
             switch(options)
             {
+                case "match_multi":
+                    data = _repo.SearchQueryMatchFields(key);
+                    break;
                 case "match":
-                    data = _repo.SearchQuery(key);
+                    data = _repo.SearchQueryMatchField(key);
                     break;
                 case "match_all":
                     data = _repo.GetAllData();
