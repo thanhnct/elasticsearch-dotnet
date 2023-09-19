@@ -23,6 +23,9 @@
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function (e) {
+
+            initDataTable([]);
+
             $('#btnSearch').click(function (e) {
                 e.preventDefault();
                 $.ajax({
@@ -32,18 +35,7 @@
                     success: function (response) {
                         let dataSource = response.data;
                         $('#myTable').DataTable().clear().destroy();
-                        $('#myTable').DataTable({
-                            searching: true,
-                            ordering: false,
-                            data: dataSource,
-                            columns: [
-                                { data: 'firstName' },
-                                { data: 'lastName' },
-                                { data: 'temperatureC' },
-                                { data: 'temperatureF' },
-                                { data: 'date' },
-                            ]
-                        });
+                        initDataTable(dataSource);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         alert(xhr.responseText);
@@ -51,21 +43,24 @@
                 });
             });
 
-
-            $('#myTable').DataTable({
-                searching: false,
-                data: [],
-                columns: [
-                    { data: 'firstName' },
-                    { data: 'lastName' },
-                    { data: 'temperatureC' },
-                    { data: 'temperatureF' },
-                    { data: 'date' },
-                ]
+            $("#txtSearch").keyup(function (event) {
+                if (event.keyCode === 13) {
+                    $('#btnSearch').click();
+                }
             });
 
-
+            function initDataTable(dataSource) {
+                $('#myTable').DataTable({
+                    searching: false,
+                    data: dataSource,
+                    columns: [
+                        { data: 'name' },
+                        { data: 'temperatureC' },
+                        { data: 'temperatureF' },
+                        { data: 'date' },
+                    ]
+                });
+            }
         })
-
     </script>
 }

@@ -67,10 +67,5 @@ namespace ElasticSearch.Controllers
         {
             return Json(_repo.SeedData(length));
         }
-
-        public JsonResult GetAllData()
-        {
-            return Json(_repo.GetAllData());
-        }
     }
 }

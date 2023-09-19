@@ -1,0 +1,61 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 1,
+      "max_ngram_diff": 7,
+      "analysis": {
+        "filter": {
+          "checklength_filter": {
+            "type": "length",
+            "min": 1
+          }
+        },
+        "analyzer": {
+          "vietnamese_analyzer": {
+            "tokenizer": "vi_tokenizer",
+            "char_filter": [
+              "html_strip"
+            ],
+            "filter": [
+              "icu_folding",
+              "checklength_filter"
+            ]
+          },
+          "character_analyzer": {
+            "tokenizer": "custom_tokenizer",
+            "filter": [
+              "icu_folding",
+              "checklength_filter"
+            ]
+          }
+        },
+        "tokenizer": {
+          "custom_tokenizer": {
+            "type": "ngram",
+            "min_gram": 1,
+            "max_gram": 7,
+            "token_chars": [
+              "letter",
+              "digit",
+              "symbol",
+              "punctuation"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "name": {
+        "type": "text",
+        "analyzer": "vietnamese_analyzer"
+      },
+      "originName": {
+        "type": "text",
+        "analyzer": "character_analyzer"
+      }
+    }
+  }
+}
