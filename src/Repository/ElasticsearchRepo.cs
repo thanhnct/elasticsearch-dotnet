@@ -194,7 +194,7 @@ namespace ElasticSearch.Repository
             if (!string.IsNullOrEmpty(key))
             {
                 var response = _client.Search<WeatherForecastModel>(s => s.Index(INDEX_NAME).From(0).Size(10000).Query(
-                q => q.MultiMatch(m => m.Fields(new string[] { "code", "name"}).Query(key))));
+                q => q.QueryString(m => m.Fields(new string[] { "code", "name"}).Query(key))));
 
                 var dataResult = response.Documents.ToList();
 

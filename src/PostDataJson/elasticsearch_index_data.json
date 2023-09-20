@@ -9,17 +9,18 @@
           "checklength_filter": {
             "type": "length",
             "min": 1
+          },
+          "ascii_folding": {
+            "type": "asciifolding",
+            "preserve_original": true
           }
         },
         "analyzer": {
           "vietnamese_analyzer": {
             "tokenizer": "vi_tokenizer",
-            "char_filter": [
-              "html_strip"
-            ],
             "filter": [
-              "icu_folding",
-              "checklength_filter"
+              "lowercase",
+              "ascii_folding"
             ]
           },
           "character_analyzer": {
