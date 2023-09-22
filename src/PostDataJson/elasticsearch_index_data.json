@@ -51,12 +51,23 @@
     "properties": {
       "name": {
         "type": "text",
-        "analyzer": "vietnamese_analyzer"
+        "analyzer": "standard",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
       },
-      "originName": {
-        "type": "text",
-        "analyzer": "character_analyzer"
-      },
+      //"originName": {
+      //  "type": "text",
+      //  "fields": {
+      //    "keyword": {
+      //      "type": "keyword",
+      //      "ignore_above": 256
+      //    }
+      //  }
+      //},
       "code": {
         "type": "text"
       }

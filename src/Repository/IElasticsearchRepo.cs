@@ -10,5 +10,6 @@ namespace ElasticSearch.Repository
         ResponseModel GetAllData();
         ResponseModel SearchQueryMatchField(string key);
         ResponseModel SearchQueryMatchFields(string key);
+        ResponseModel SearchQueryStringFields(string key);
     }
 }

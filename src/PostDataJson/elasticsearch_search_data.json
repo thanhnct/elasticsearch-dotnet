@@ -1,0 +1,17 @@
+{
+  "size": 1000,
+  "from": 0,
+  "sort": [
+    {
+      "name.keyword": {
+        "order": "desc"
+      }
+    }
+  ],
+  "query": {
+    "query_string": {
+      "query": "(Xuân Bảo) OR (Bích)",
+      "default_field": "name"
+    }
+  }
+}

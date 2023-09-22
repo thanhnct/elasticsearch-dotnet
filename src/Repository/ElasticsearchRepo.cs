@@ -162,7 +162,7 @@ namespace ElasticSearch.Repository
                 if (!dataResult.Any())
                 {
                     response = _client.Search<WeatherForecastModel>(s => s.Index(INDEX_NAME).From(0).Size(10000).Query(
-                    q => q.Match(m => m.Field(f => f.OriginName).Query(key).Analyzer("character_analyzer"))));
+                    q => q.Match(m => m.Field(f => f.OriginName).Query(key).Analyzer("standard"))));
                     dataResult = response.Documents.ToList();
                 }
 
@@ -186,7 +186,6 @@ namespace ElasticSearch.Repository
             }
             return result;
         }
-
         public ResponseModel SearchQueryMatchFields(string key)
         {
             ResponseModel result = new();
@@ -214,6 +213,42 @@ namespace ElasticSearch.Repository
                     {
                         result.Message = response.ElasticsearchServerError.Error.Type;
                     }
+                }
+            }
+            return result;
+        }
+        public ResponseModel SearchQueryStringFields(string key)
+        {
+            ResponseModel result = new();
+            result.Data = new();
+            var absolutepath = Directory.GetCurrentDirectory();
+            var filePath = Path.Combine(absolutepath + "/PostDataJson/elasticsearch_search_data.json");
+
+            PostData postData;
+            using (StreamReader r = new StreamReader(filePath))
+            {
+                postData = r.ReadToEnd();
+            }
+
+            SearchResponse<WeatherForecastModel> response = _client.Transport.Post<SearchResponse<WeatherForecastModel>>("/weather/_search", postData);
+
+            var dataResult = response.Documents.ToList();
+
+            if (response.IsValidResponse)
+            {
+                result.Data = dataResult;
+            }
+            else
+            {
+                result.IsSuccess = response.IsValidResponse;
+                var objError = response.ApiCallDetails.OriginalException;
+                if (objError is not null)
+                {
+                    result.Message = objError.Message;
+                }
+                if (response.ElasticsearchServerError is not null)
+                {
+                    result.Message = response.ElasticsearchServerError.Error.Type;
                 }
             }
             return result;
