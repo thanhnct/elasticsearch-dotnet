@@ -10,8 +10,8 @@
   ],
   "query": {
     "query_string": {
-      "query": "(Xuân Bảo) OR (Bích)",
-      "default_field": "name"
+      "default_field": "name",
+      "query": "(Xuân Bảo) OR (Bích)"
     }
   }
 }

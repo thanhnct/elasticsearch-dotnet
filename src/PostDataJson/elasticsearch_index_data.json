@@ -51,7 +51,10 @@
     "properties": {
       "name": {
         "type": "text",
-        "analyzer": "standard",
+        "analyzer": "vietnamese_analyzer"
+      },
+      "originName": {
+        "type": "text",
         "fields": {
           "keyword": {
             "type": "keyword",
@@ -59,15 +62,6 @@
           }
         }
       },
-      //"originName": {
-      //  "type": "text",
-      //  "fields": {
-      //    "keyword": {
-      //      "type": "keyword",
-      //      "ignore_above": 256
-      //    }
-      //  }
-      //},
       "code": {
         "type": "text"
       }

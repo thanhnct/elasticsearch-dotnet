@@ -159,12 +159,12 @@ namespace ElasticSearch.Repository
                 var dataResult = response.Documents.ToList();
 
                 // If nothing is found, search for the character
-                if (!dataResult.Any())
-                {
-                    response = _client.Search<WeatherForecastModel>(s => s.Index(INDEX_NAME).From(0).Size(10000).Query(
-                    q => q.Match(m => m.Field(f => f.OriginName).Query(key).Analyzer("standard"))));
-                    dataResult = response.Documents.ToList();
-                }
+                //if (!dataResult.Any())
+                //{
+                //    response = _client.Search<WeatherForecastModel>(s => s.Index(INDEX_NAME).From(0).Size(10000).Query(
+                //    q => q.Match(m => m.Field(f => f.OriginName).Query(key).Analyzer("standard"))));
+                //    dataResult = response.Documents.ToList();
+                //}
 
                 if (response.IsValidResponse)
                 {

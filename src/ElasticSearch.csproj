@@ -10,4 +10,6 @@
     <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.9.3" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties postdatajson_4elasticsearch_3index_3data_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>
